@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/brand"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:gravity="center"
+    android:orientation="vertical">
+    <ImageView style="@style/WW" android:id="@+id/logo"
+        android:src="@drawable/olffi_logo_simple"
+        />
+    <TextView android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Online film financing"
+        android:textSize="@dimen/text_brand_title"
+        />
+</LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.olffi.app.olffi.MainActivity">
+
+    <include layout="@layout/layout_brand" />
+
+    <LinearLayout android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/margin_half">
+        <Button android:id="@+id/buttonFacebook"
+            style="@style/MW"
+            android:layout_margin="@dimen/margin_half"
+            android:text="Facebook"
+            android:layout_weight="0.5" />
+
+        <Button android:id="@+id/buttonLinkedIn"
+            style="@style/MW"
+            android:layout_margin="@dimen/margin_half"
+            android:text="LinkedIn"
+            android:layout_weight="0.5" />
+        <LinearLayout android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button  android:id="@+id/buttonSignIn"
+                style="@style/MW"
+                android:layout_margin="@dimen/margin_half"
+                android:text="Sign in"
+                android:layout_weight="0.5" />
+
+            <Button android:id="@+id/buttonSignUp"
+                style="@style/MW"
+                android:layout_margin="@dimen/margin_half"
+                android:text="Sign up"
+                android:layout_weight="0.5" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

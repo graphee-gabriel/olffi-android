@@ -1,0 +1,86 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:textViewStyle">@style/TextView</item>
+    </style>
+    <style name="BackgroundImageTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/bg_layer</item>
+    </style>
+
+    <style name="Button" parent="MW">
+        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:padding">@dimen/margin</item>
+        <item name="android:textColor">@color/colorButton</item>
+        <item name="android:textSize">@dimen/abc_text_size_small_material</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:drawablePadding">@dimen/margin</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextView" parent="MW">
+        <item name="android:padding">@dimen/margin</item>
+        <item name="android:textColor">@color/colorButton</item>
+        <item name="android:textSize">@dimen/abc_text_size_small_material</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="EdiTextLogin" parent="MW">
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:background">@drawable/bg_edit_text_login</item>
+        <item name="android:padding">@dimen/margin</item>
+    </style>
+
+    <style name="MW">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="MM">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="WW">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="WW.Vertical" parent="WW">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+
+    <style name="MW.Vertical" parent="MW">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="MM.Vertical" parent="MM">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="MM.Padding" parent="MM">
+        <item name="android:padding">@dimen/margin</item>
+    </style>
+
+
+    <style name="MW.Padding" parent="MW">
+        <item name="android:padding">@dimen/margin</item>
+    </style>
+
+    <style name="MW.Vertical.Padding" parent="MW.Vertical">
+        <item name="android:padding">@dimen/margin</item>
+    </style>
+
+    <style name="MM.Vertical.Padding" parent="MM.Vertical">
+        <item name="android:padding">@dimen/margin</item>
+    </style>
+</resources>
