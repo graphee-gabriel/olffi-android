@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#a41e14</color>
     <color name="colorButton">#eee</color>
+    <color name="colorFacebook">#3b5998</color>
+    <color name="colorLinkedIn">#0077B5</color>
 </resources>

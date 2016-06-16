@@ -13,17 +13,39 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="@dimen/margin_half">
-        <Button android:id="@+id/buttonFacebook"
-            style="@style/MW"
-            android:layout_margin="@dimen/margin_half"
-            android:text="Facebook"
-            android:layout_weight="0.5" />
+        <RelativeLayout style="@style/WW"
+            android:layout_margin="@dimen/margin_half">
 
-        <Button android:id="@+id/buttonLinkedIn"
-            style="@style/MW"
-            android:layout_margin="@dimen/margin_half"
-            android:text="LinkedIn"
-            android:layout_weight="0.5" />
+            <Button android:id="@+id/buttonLinkedIn"
+                style="@style/Button"
+                android:text="@string/button_log_in_li"
+                android:background="@drawable/bg_button_li"
+                 />
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_ic_left"
+                android:layout_width="@dimen/icon_button_left_linkedin"
+                android:layout_height="@dimen/icon_button_left_linkedin"
+                android:src="@drawable/ic_linkedin"
+                />
+        </RelativeLayout>
+        <RelativeLayout style="@style/WW"
+            android:layout_margin="@dimen/margin_half">
+            <Button android:id="@+id/buttonFacebook"
+                style="@style/MW"
+                android:text="@string/button_log_in_fb"
+                android:background="@drawable/bg_button_fb"
+                android:layout_weight="0.5" />
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_ic_left"
+                android:layout_width="@dimen/icon_button_left_facebook"
+                android:layout_height="@dimen/icon_button_left_facebook"
+                android:src="@drawable/ic_facebook"
+                />
+        </RelativeLayout>
+
+
         <LinearLayout android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,13 +54,13 @@
             <Button  android:id="@+id/buttonSignIn"
                 style="@style/MW"
                 android:layout_margin="@dimen/margin_half"
-                android:text="Sign in"
+                android:text="@string/button_log_in"
                 android:layout_weight="0.5" />
 
             <Button android:id="@+id/buttonSignUp"
                 style="@style/MW"
                 android:layout_margin="@dimen/margin_half"
-                android:text="Sign up"
+                android:text="@string/button_sign_up"
                 android:layout_weight="0.5" />
         </LinearLayout>
     </LinearLayout>

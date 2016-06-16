@@ -40,6 +40,8 @@
                         android:id="@+id/firstName"
                         style="@style/EdiTextLogin"
                         android:hint="@string/prompt_first_name"
+                        android:nextFocusForward="@+id/lastName"
+                        android:imeOptions="actionNext"
                         android:maxLines="1" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -69,6 +71,8 @@
                     style="@style/EdiTextLogin"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
+                    android:imeOptions="actionNext"
+                    android:nextFocusForward="@+id/password"
                     android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>
@@ -100,7 +104,7 @@
                     android:id="@+id/passwordConfirm"
                     style="@style/EdiTextLogin"
                     android:hint="@string/prompt_password_confirm"
-                    android:imeActionId="@+id/login"
+                    android:imeActionId="@+id/sign_up"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"

@@ -19,4 +19,8 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="title_activity_sign_up">Sign up</string>
+    <string name="button_log_in">Log in</string>
+    <string name="button_sign_up">Sign up</string>
+    <string name="button_log_in_fb">Log in with Facebook</string>
+    <string name="button_log_in_li">Log in with LinkedIn</string>
 </resources>
