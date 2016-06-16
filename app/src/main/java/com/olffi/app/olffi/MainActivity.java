@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean testBasicAuthAndLaunchWebApp() {
         if (pref.isLoggedInWithEmail()) {
-            Log.d(TAG, "BasicAuth: user is logged in: "+pref.getEmail()+" | "+pref.getPassword());
+            Log.d(TAG, "BasicAuth: user is logged in: "+pref.getEmail()+" | "+pref.getBasicAuthToken());
             startWebApp();
             return true;
         }

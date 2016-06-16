@@ -11,11 +11,11 @@
         <item name="android:textViewStyle">@style/TextView</item>
     </style>
     <style name="BackgroundImageTheme" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/bg_layer</item>
+        <item name="android:windowBackground">@drawable/bg_app_darken</item>
     </style>
 
     <style name="Button" parent="MW">
-        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:background">@drawable/bg_button</item>
         <item name="android:padding">@dimen/margin</item>
         <item name="android:textColor">@color/colorButton</item>
         <item name="android:textSize">@dimen/abc_text_size_small_material</item>
@@ -35,7 +35,7 @@
     <style name="EdiTextLogin" parent="MW">
         <item name="android:singleLine">true</item>
         <item name="android:maxLines">1</item>
-        <item name="android:background">@drawable/bg_edit_text_login</item>
+        <item name="android:background">@drawable/bg_edit_text</item>
         <item name="android:padding">@dimen/margin</item>
     </style>
 

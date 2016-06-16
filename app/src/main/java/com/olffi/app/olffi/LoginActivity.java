@@ -30,10 +30,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.olffi.app.olffi.data.App;
-import com.olffi.app.olffi.data.UserPreferences;
-import com.stormpath.sdk.Stormpath;
-import com.stormpath.sdk.StormpathCallback;
-import com.stormpath.sdk.models.StormpathError;
+import com.olffi.app.olffi.data.BasicAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -227,34 +224,35 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     protected void onLogin() {
         showProgress(true);
-        Stormpath.login(mEmail, mPassword, new StormpathCallback<Void>() {
+        BasicAuth.logIn(this, mEmail, mPassword, new BasicAuth.AuthResponse() {
             @Override
-            public void onSuccess(Void aVoid) {
-                // User successfully registered.
-                onLoginSuccess();
+            public void onSuccess() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        onLoginSuccess();
+                    }
+                });
             }
 
             @Override
-            public void onFailure(StormpathError error) {
-                // Something went wrong.
-                Log.e(TAG, "code: " + error.code());
-                Log.e(TAG, error.developerMessage());
-                Log.e(TAG, error.message());
-                Log.e(TAG, error.moreInfo());
-                onLoginFailure();
+            public void onFailure(String errorMessage) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        onLoginFailure();
+                    }
+                });
             }
         });
     }
 
     protected void onLoginSuccess() {
-        Log.d(TAG, "login success> email: " + mEmail + " | pw: " + mPassword);
-        new UserPreferences(getBaseContext()).logInWithEmail(mEmail, mPassword);
         showProgress(false);
         startWebApp();
     }
 
     protected void onLoginFailure() {
-        Log.e(TAG, "login failure> email: " + mEmail + " | pw: " + mPassword);
         mViewPassword.setError(getString(R.string.error_incorrect_password));
         mViewPassword.requestFocus();
         showProgress(false);

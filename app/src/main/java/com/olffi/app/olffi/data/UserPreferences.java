@@ -23,7 +23,7 @@ public class UserPreferences {
 
     private final String PREF_NAME = BuildConfig.APPLICATION_ID;
     private final String KEY_EMAIL = "email";
-    private final String KEY_PASSWORD = "pw";
+    private final String KEY_BA_TOKEN = "basic_auth_token";
     private final String KEY_LI_TOKEN = "li_token";
     private final String KEY_LOGIN_TYPE = "login_type";
 
@@ -31,10 +31,10 @@ public class UserPreferences {
         this.pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
-    public void logInWithEmail(String email, String password) {
+    public void logInWithEmail(String email, String token) {
         pref.edit()
                 .putString(KEY_EMAIL, email)
-                .putString(KEY_PASSWORD, password)
+                .putString(KEY_BA_TOKEN, token)
                 .putInt(KEY_LOGIN_TYPE, LOGIN_TYPE_EMAIL)
                 .apply();
     }
@@ -69,8 +69,8 @@ public class UserPreferences {
         return pref.getString(KEY_EMAIL, "");
     }
 
-    public String getPassword() {
-        return pref.getString(KEY_PASSWORD, "");
+    public String getBasicAuthToken() {
+        return pref.getString(KEY_BA_TOKEN, "");
     }
 
     public boolean isLoggedIn() {

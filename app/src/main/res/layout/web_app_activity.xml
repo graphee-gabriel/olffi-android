@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@drawable/bg_layer"
+        android:background="@drawable/bg_app_darken"
         >
         <include layout="@layout/layout_brand" />
     </LinearLayout>

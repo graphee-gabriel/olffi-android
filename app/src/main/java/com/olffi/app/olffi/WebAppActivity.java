@@ -57,11 +57,11 @@ public class WebAppActivity extends AppCompatActivity {
 
                 @Override
                 public void onLoadResource(WebView view, String url) {
+                    super.onLoadResource(view, url);
                     if (url.contains("logout")) {
                         new UserPreferences(WebAppActivity.this).logOut();
                         App.startActivityClearTop(WebAppActivity.this, MainActivity.class);
                     }
-                    super.onLoadResource(view, url);
                 }
 
                 @Override
@@ -74,18 +74,18 @@ public class WebAppActivity extends AppCompatActivity {
             };
             webView.setWebViewClient(webViewClient);
 
-//            String credentials = "login_email=toto";
-//            Log.d(TAG, credentials);
-//            webView.postUrl("http://www.olffi.com/gm/index.php", credentials.getBytes());
             String credentials = "";
             if (pref.isLoggedInWithFacebook()) {
-                credentials = "?token="+ AccessToken.getCurrentAccessToken().getToken()+"&type=facebook";
+                credentials = getCredentials(AccessToken.getCurrentAccessToken().getToken(), "facebook");
             } else if (pref.isLoggedInWithLinkedIn()) {
-                credentials = "?token="+ pref.getAccessTokenLinkedIn().getValue()+"&type=linkedin";
+                com.linkedin.platform.AccessToken accessTokenLinkedIn = pref.getAccessTokenLinkedIn();
+                if (accessTokenLinkedIn != null)
+                    credentials = getCredentials(accessTokenLinkedIn.getValue(), "linkedin");
             } else if (pref.isLoggedInWithEmail()) {
-                credentials = "";
+                credentials = getCredentials(pref.getBasicAuthToken(), "basic");
             }
-            webView.loadUrl("https://www.olffi.com/app"+credentials);
+            String url = "https://www.olffi.com/app"+credentials;
+            webView.loadUrl(url);
         }
 
     }
@@ -107,5 +107,11 @@ public class WebAppActivity extends AppCompatActivity {
     private void hideLoading() {
         if (progressBarInApp != null)
             progressBarInApp.setVisibility(View.GONE);
+    }
+
+    private String getCredentials(String token, String type) {
+        if (token.isEmpty() || type.isEmpty())
+            return "";
+        return "?token=" + token + "&type=" + type;
     }
 }
