@@ -30,7 +30,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
-    compile 'com.stormpath.sdk:stormpath-sdk-android:1.0.0'
     testCompile 'junit:junit:4.12'
     compile project(path: ':linkedin-sdk')
 }

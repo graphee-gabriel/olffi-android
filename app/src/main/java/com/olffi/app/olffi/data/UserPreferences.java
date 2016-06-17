@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
-import com.google.gson.Gson;
-import com.linkedin.platform.AccessToken;
 import com.olffi.app.olffi.BuildConfig;
 
 /**
@@ -39,9 +37,9 @@ public class UserPreferences {
                 .apply();
     }
 
-    public void logInWithLinkedIn(AccessToken accessToken) {
+    public void logInWithLinkedIn(String token) {
         pref.edit()
-                .putString(KEY_LI_TOKEN, new Gson().toJson(accessToken))
+                .putString(KEY_LI_TOKEN, token)
                 .putInt(KEY_LOGIN_TYPE, LOGIN_TYPE_LINKED_IN)
                 .apply();
     }
@@ -57,11 +55,7 @@ public class UserPreferences {
         return pref.getInt(KEY_LOGIN_TYPE, LOGIN_TYPE_LOGGED_OUT);
     }
 
-    public AccessToken getAccessTokenLinkedIn() {
-        return new Gson().fromJson(getAccessTokenLinkedJson(), AccessToken.class);
-    }
-
-    private String getAccessTokenLinkedJson() {
+    public String getAccessTokenLinkedIn() {
         return pref.getString(KEY_LI_TOKEN, "");
     }
 

@@ -26,7 +26,7 @@ public class App {
         startActivityClearTop(currentActivity, intent);
     }
 
-    public static void startActivityClearTop(Activity currentActivity, Intent intent) {
+    static void startActivityClearTop(Activity currentActivity, Intent intent) {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         currentActivity.finish();
         currentActivity.startActivity(intent);

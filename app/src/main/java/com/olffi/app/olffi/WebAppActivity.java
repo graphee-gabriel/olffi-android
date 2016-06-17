@@ -78,9 +78,7 @@ public class WebAppActivity extends AppCompatActivity {
             if (pref.isLoggedInWithFacebook()) {
                 credentials = getCredentials(AccessToken.getCurrentAccessToken().getToken(), "facebook");
             } else if (pref.isLoggedInWithLinkedIn()) {
-                com.linkedin.platform.AccessToken accessTokenLinkedIn = pref.getAccessTokenLinkedIn();
-                if (accessTokenLinkedIn != null)
-                    credentials = getCredentials(accessTokenLinkedIn.getValue(), "linkedin");
+                credentials = getCredentials(pref.getAccessTokenLinkedIn(), "linkedin");
             } else if (pref.isLoggedInWithEmail()) {
                 credentials = getCredentials(pref.getBasicAuthToken(), "basic");
             }

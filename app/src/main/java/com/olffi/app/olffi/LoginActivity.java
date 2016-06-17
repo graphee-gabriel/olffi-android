@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -29,7 +31,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.olffi.app.olffi.data.App;
-import com.olffi.app.olffi.data.BasicAuth;
+import com.olffi.app.olffi.data.Auth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +58,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-    private static final String TAG = LoginActivity.class.getName();
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -69,8 +70,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mViewFirstName;
     private EditText mViewLastName;
     private ProgressBar mProgressBar;
-    private View mSignUpNameView;
-    private View mSignUpConfirmView;
     private View mLoginFormView;
     private boolean isAttemptingLogin = false;
 
@@ -96,13 +95,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mViewFirstName = (EditText) findViewById(firstName);
         mViewLastName = (EditText) findViewById(lastName);
         mLoginFormView = findViewById(login_form);
-        mSignUpConfirmView = findViewById(signUpConfirm);
-        mSignUpNameView = findViewById(signUpName);
-        Button mEmailSignInButton = (Button) findViewById(email_sign_in_button);
+        View signUpConfirmView = findViewById(signUpConfirm);
+        View signUpNameView = findViewById(signUpName);
+        Button emailSignInButton = (Button) findViewById(email_sign_in_button);
 
         if (mIsSignUp) {
-            mSignUpConfirmView.setVisibility(View.VISIBLE);
-            mSignUpNameView.setVisibility(View.VISIBLE);
+            if (signUpConfirmView != null)
+                signUpConfirmView.setVisibility(View.VISIBLE);
+            if (signUpNameView != null)
+                signUpNameView.setVisibility(View.VISIBLE);
         }
 
         mViewPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -115,8 +116,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
-
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        if (emailSignInButton != null)
+            emailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -125,6 +126,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mProgressBar = (ProgressBar) findViewById(login_progress);
         if (mProgressBar != null) {
+            //noinspection deprecation
             mProgressBar.getIndeterminateDrawable().setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_IN);
         }
     }
@@ -209,21 +211,43 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
 
-    protected void onSignUp() {
+    private void onSignUp() {
+        Auth.signUp(mFirstName, mLastName, mEmail, mPassword, new Auth.AuthResponse() {
+            @Override
+            public void onSuccess() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        onSignUpSuccess();
+                    }
+                });
+            }
 
+            @Override
+            public void onFailure(String errorMessage) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        onSignUpFailure();
+                    }
+                });
+            }
+        });
     }
 
-    protected void onSignUpSuccess() {
-
+    private void onSignUpSuccess() {
+        showProgress(false);
+        showAlertDialog("An e-mail has been sent to you. Please open it and click on the confirmation link to proceed.", false);
     }
 
-    protected void onSignUpFailure() {
-
+    private void onSignUpFailure() {
+        showProgress(false);
+        showAlertDialog("Could not connect to the server. Please try again later.", false);
     }
 
-    protected void onLogin() {
+    private void onLogin() {
         showProgress(true);
-        BasicAuth.logIn(this, mEmail, mPassword, new BasicAuth.AuthResponse() {
+        Auth.logIn(this, mEmail, mPassword, new Auth.AuthResponse() {
             @Override
             public void onSuccess() {
                 runOnUiThread(new Runnable() {
@@ -246,12 +270,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
     }
 
-    protected void onLoginSuccess() {
+    private void onLoginSuccess() {
         showProgress(false);
         startWebApp();
     }
 
-    protected void onLoginFailure() {
+    private void onLoginFailure() {
         mViewPassword.setError(getString(R.string.error_incorrect_password));
         mViewPassword.requestFocus();
         showProgress(false);
@@ -262,7 +286,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isPasswordValid() {
-        return mPassword.length() > 4;
+        return mPassword.length() >= 6;
     }
 
     private boolean isFirstNameValid() {
@@ -411,7 +435,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         };
 
         int ADDRESS = 0;
-        int IS_PRIMARY = 1;
+        //int IS_PRIMARY = 1;
+    }
+
+    private AlertDialog showAlertDialog(String message, final boolean error) {
+        return new AlertDialog.Builder(getBaseContext())
+                .setMessage(message)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        // restart activity without sign up intent
+                        if (!error)
+                            App.startActivityClearTop(LoginActivity.this, LoginActivity.class);
+                    }
+                })
+                .show();
     }
 
     private void startWebApp() {
