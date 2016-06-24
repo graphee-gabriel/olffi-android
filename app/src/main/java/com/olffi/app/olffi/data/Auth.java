@@ -1,7 +1,17 @@
 package com.olffi.app.olffi.data;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+
+import com.linkedin.platform.APIHelper;
+import com.linkedin.platform.LISessionManager;
+import com.linkedin.platform.errors.LIApiError;
+import com.linkedin.platform.errors.LIAuthError;
+import com.linkedin.platform.listeners.ApiListener;
+import com.linkedin.platform.listeners.ApiResponse;
+import com.linkedin.platform.listeners.AuthListener;
+import com.linkedin.platform.utils.Scope;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,6 +30,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 /**
  * Created by gabrielmorin on 16/06/2016.
  */
@@ -27,6 +39,7 @@ import okhttp3.Response;
 public class Auth {
     private final static String TAG = Auth.class.getName();
     private final static String urlBasic = "https://www.olffi.com/api/user";
+    public final static String HEADER_CREDENTIALS = "Authorization";
     public interface AuthResponse {
         void onSuccess();
         void onFailure(String errorMessage);
@@ -35,7 +48,7 @@ public class Auth {
     public static void logIn(final Context context, final String email, final String password, final AuthResponse callback) {
         Request request = new Request.Builder()
                 .url(urlBasic)
-                .header("Authorization", Credentials.basic(email, password))
+                .header(HEADER_CREDENTIALS, Credentials.basic(email, password))
                 .build();
 
         new OkHttpClient().newCall(request).enqueue(new Callback() {
@@ -47,22 +60,6 @@ public class Auth {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                /*if (response.isSuccessful()) {
-                    String responseString = response.body().string();
-                    try {
-                        JSONObject json = new JSONObject(responseString);
-                        String token = json.getString("token");
-                        new UserPreferences(context).logInWithEmail(email, token);
-                        callback.onSuccess();
-                    } catch (JSONException e) {
-                        String error = "Error parsing JSON: "+ e.getMessage();
-                        Log.e(TAG, error, e);
-                        callback.onFailure(error);
-                    }
-                } else {
-                    callback.onFailure(response.message());
-                }*/
-
                 String token = parseToken(response);
                 if (token == null) {
                     callback.onFailure(response.message());
@@ -105,7 +102,45 @@ public class Auth {
         });
     }
 
-    public static void linkedIn(final Context context, String id, String firstName, String lastName, String email, final AuthResponse callback)  {
+    public static void linkedIn(final Activity activity, final AuthResponse authResponse) {
+        LISessionManager.getInstance(getApplicationContext()).init(activity, Scope.build(Scope.R_BASICPROFILE, Scope.R_EMAILADDRESS), new AuthListener() {
+            @Override
+            public void onAuthSuccess() {
+                APIHelper apiHelper = APIHelper.getInstance(getApplicationContext());
+                apiHelper.getRequest(activity, "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address)", new ApiListener() {
+                    @Override
+                    public void onApiSuccess(ApiResponse apiResponse) {
+                        JSONObject data = apiResponse.getResponseDataAsJson();
+                        Log.d(TAG, "response :  "+apiResponse.getResponseDataAsString());
+                        try {
+                            String id = data.getString("id");
+                            String firstName = data.getString("firstName");
+                            String lastName = data.getString("lastName");
+                            String email = data.getString("emailAddress");
+                            linkedInCustomAuth(activity, id, firstName, lastName, email, authResponse);
+                            //Log.d(TAG, "id: "+id+" | firstName: "+firstName+" | lastName: "+lastName+ " | email: "+email);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onApiError(LIApiError liApiError) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onAuthError(LIAuthError error) {
+                Log.e(TAG, "LinkedIn error: "+error.toString());
+            }
+        }, true);
+    }
+
+
+    private static void linkedInCustomAuth(final Context context, String id, String firstName, String lastName, String email, final AuthResponse callback)  {
         String hash = null;
         try {
             String salt = "FuckL1nk3dIN.com";
@@ -150,6 +185,7 @@ public class Auth {
             }
         });
     }
+
     private static String parseToken(Response response) throws IOException {
         String token = null;
         if (response.isSuccessful()) {
@@ -165,6 +201,7 @@ public class Auth {
 
         return token;
     }
+
     private static String md5(String input) throws NoSuchAlgorithmException {
         String result = input;
         if(input != null) {
@@ -177,5 +214,12 @@ public class Auth {
             }
         }
         return result;
+    }
+
+    public static String getCredentials(Context context) {
+        UserPreferences pref = new UserPreferences(context);
+        String login = pref.getCredentialLogin();
+        String password = pref.getCredentialPassword();
+        return Credentials.basic(login, password);
     }
 }

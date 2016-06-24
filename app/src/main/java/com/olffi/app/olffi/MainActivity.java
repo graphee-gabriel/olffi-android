@@ -14,21 +14,11 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.linkedin.platform.APIHelper;
 import com.linkedin.platform.LISessionManager;
-import com.linkedin.platform.errors.LIApiError;
-import com.linkedin.platform.errors.LIAuthError;
-import com.linkedin.platform.listeners.ApiListener;
-import com.linkedin.platform.listeners.ApiResponse;
-import com.linkedin.platform.listeners.AuthListener;
-import com.linkedin.platform.utils.Scope;
 import com.olffi.app.olffi.data.App;
 import com.olffi.app.olffi.data.Auth;
 import com.olffi.app.olffi.data.SdkInitializer;
 import com.olffi.app.olffi.data.UserPreferences;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -55,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(LoginResult loginResult) {
                                 // App code
-                                pref.logInWithFacebook();
                                 testFacebookTokenAndLaunchWebApp();
                             }
 
@@ -98,50 +87,17 @@ public class MainActivity extends AppCompatActivity {
             buttonLinkedIn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    LISessionManager.getInstance(getApplicationContext()).init(MainActivity.this, Scope.build(Scope.R_BASICPROFILE, Scope.R_EMAILADDRESS), new AuthListener() {
+                    Auth.linkedIn(MainActivity.this, new Auth.AuthResponse() {
                         @Override
-                        public void onAuthSuccess() {
-                            APIHelper apiHelper = APIHelper.getInstance(getApplicationContext());
-                            apiHelper.getRequest(MainActivity.this, "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address)", new ApiListener() {
-                                @Override
-                                public void onApiSuccess(ApiResponse apiResponse) {
-                                    JSONObject data = apiResponse.getResponseDataAsJson();
-                                    Log.d(TAG, "response :  "+apiResponse.getResponseDataAsString());
-                                    try {
-                                        String id = data.getString("id");
-                                        String firstName = data.getString("firstName");
-                                        String lastName = data.getString("lastName");
-                                        String email = data.getString("emailAddress");
-                                        Auth.linkedIn(MainActivity.this, id, firstName, lastName, email, new Auth.AuthResponse() {
-                                            @Override
-                                            public void onSuccess() {
-                                                testLinkedInTokenAndLaunchWebApp();
-                                            }
-
-                                            @Override
-                                            public void onFailure(String errorMessage) {
-
-                                            }
-                                        });
-                                        //Log.d(TAG, "id: "+id+" | firstName: "+firstName+" | lastName: "+lastName+ " | email: "+email);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-
-                                @Override
-                                public void onApiError(LIApiError liApiError) {
-
-                                }
-                            });
-
+                        public void onSuccess() {
+                            testLinkedInTokenAndLaunchWebApp();
                         }
 
                         @Override
-                        public void onAuthError(LIAuthError error) {
-                            Log.e(TAG, "LinkedIn error: "+error.toString());
+                        public void onFailure(String errorMessage) {
+
                         }
-                    }, true);
+                    });
                 }
             });
 
@@ -180,7 +136,9 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean testFacebookTokenAndLaunchWebApp() {
         if (pref.isLoggedInWithFacebook()) {
-            if (AccessToken.getCurrentAccessToken() != null) {
+            AccessToken accessTokenFacebook = AccessToken.getCurrentAccessToken();
+            if (accessTokenFacebook != null) {
+                pref.logInWithFacebook(accessTokenFacebook.getToken());
                 startWebApp();
             }
             return true;
@@ -190,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean testBasicAuthAndLaunchWebApp() {
         if (pref.isLoggedInWithEmail()) {
-            Log.d(TAG, "Auth: user is logged in: "+pref.getEmail()+" | "+pref.getBasicAuthToken());
+            Log.d(TAG, "Auth: user is logged in: "+pref.getEmail()+" | "+pref.getTokenBasicAuth());
             startWebApp();
             return true;
         }

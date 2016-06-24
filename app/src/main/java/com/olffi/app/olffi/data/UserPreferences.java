@@ -2,10 +2,10 @@ package com.olffi.app.olffi.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
-import com.olffi.app.olffi.BuildConfig;
 
 /**
  * Created by gabrielmorin on 09/06/2016.
@@ -19,14 +19,17 @@ public class UserPreferences {
             LOGIN_TYPE_LINKED_IN = 1,
             LOGIN_TYPE_FACEBOOK = 2;
 
-    private final String PREF_NAME = BuildConfig.APPLICATION_ID;
     private final String KEY_EMAIL = "email";
     private final String KEY_BA_TOKEN = "basic_auth_token";
     private final String KEY_LI_TOKEN = "li_token";
+    private final String KEY_FB_TOKEN = "fb_token";
     private final String KEY_LOGIN_TYPE = "login_type";
 
+    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
+    public static final String REGISTRATION_COMPLETE = "registrationComplete";
+
     public UserPreferences(Context context) {
-        this.pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        this.pref = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public void logInWithEmail(String email, String token) {
@@ -44,8 +47,9 @@ public class UserPreferences {
                 .apply();
     }
 
-    public void logInWithFacebook() {
+    public void logInWithFacebook(String token) {
         pref.edit()
+                .putString(KEY_FB_TOKEN, token)
                 .putInt(KEY_LOGIN_TYPE, LOGIN_TYPE_FACEBOOK)
                 .apply();
     }
@@ -55,7 +59,7 @@ public class UserPreferences {
         return pref.getInt(KEY_LOGIN_TYPE, LOGIN_TYPE_LOGGED_OUT);
     }
 
-    public String getAccessTokenLinkedIn() {
+    public String getTokenLinkedIn() {
         return pref.getString(KEY_LI_TOKEN, "");
     }
 
@@ -63,8 +67,12 @@ public class UserPreferences {
         return pref.getString(KEY_EMAIL, "");
     }
 
-    public String getBasicAuthToken() {
+    public String getTokenBasicAuth() {
         return pref.getString(KEY_BA_TOKEN, "");
+    }
+
+    public String getTokenFacebook() {
+        return pref.getString(KEY_FB_TOKEN, "");
     }
 
     public boolean isLoggedIn() {
@@ -87,5 +95,31 @@ public class UserPreferences {
         if (FacebookSdk.isInitialized())
             LoginManager.getInstance().logOut();
         pref.edit().clear().apply();
+    }
+
+    public String getCredentialLogin() {
+        int loginType = getLoginType();
+        switch (loginType) {
+            case LOGIN_TYPE_EMAIL :
+                return "basic";
+            case LOGIN_TYPE_FACEBOOK :
+                return "facebook";
+            case LOGIN_TYPE_LINKED_IN :
+                return "linkedin";
+            default: return "";
+        }
+    }
+
+    public String getCredentialPassword() {
+        int loginType = getLoginType();
+        switch (loginType) {
+            case LOGIN_TYPE_EMAIL :
+                return getTokenBasicAuth();
+            case LOGIN_TYPE_FACEBOOK :
+                return getTokenFacebook();
+            case LOGIN_TYPE_LINKED_IN :
+                return getTokenLinkedIn();
+            default: return "";
+        }
     }
 }
