@@ -35,9 +35,8 @@ public class MainActivity extends AppCompatActivity {
         SdkInitializer.facebook(this, new FacebookSdk.InitializeCallback() {
             @Override
             public void onInitialized() {
-                testBasicAuthAndLaunchWebApp();
-                testLinkedInTokenAndLaunchWebApp();
-                testFacebookTokenAndLaunchWebApp();
+                if (new UserPreferences(MainActivity.this).isLoggedIn())
+                    startWebApp();
                 callbackManager = CallbackManager.Factory.create();
 
                 LoginManager.getInstance().registerCallback(callbackManager,
@@ -45,17 +44,20 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(LoginResult loginResult) {
                                 // App code
+                                Log.d("_FB", "success");
                                 testFacebookTokenAndLaunchWebApp();
                             }
 
                             @Override
                             public void onCancel() {
                                 // App code
+                                Log.d("_FB", "cancel");
                             }
 
                             @Override
                             public void onError(FacebookException exception) {
                                 // App code
+                                Log.d("_FB", "error");
                             }
                         });
             }
@@ -134,28 +136,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private boolean testFacebookTokenAndLaunchWebApp() {
-        if (pref.isLoggedInWithFacebook()) {
+    private void testFacebookTokenAndLaunchWebApp() {
             AccessToken accessTokenFacebook = AccessToken.getCurrentAccessToken();
+            Log.d("_FB", "token test");
             if (accessTokenFacebook != null) {
-                pref.logInWithFacebook(accessTokenFacebook.getToken());
                 startWebApp();
+                Log.d("_FB", "token ok");
+                pref.logInWithFacebook(accessTokenFacebook.getToken());
             }
-            return true;
-        }
-        return false;
     }
 
-    private boolean testBasicAuthAndLaunchWebApp() {
-        if (pref.isLoggedInWithEmail()) {
-            Log.d(TAG, "Auth: user is logged in: "+pref.getEmail()+" | "+pref.getTokenBasicAuth());
-            startWebApp();
-            return true;
-        }
-
-        Log.d(TAG, "Auth: user is not logged in");
-        return false;
-    }
 
     private boolean testLinkedInTokenAndLaunchWebApp() {
         if (pref.isLoggedInWithLinkedIn()) {
