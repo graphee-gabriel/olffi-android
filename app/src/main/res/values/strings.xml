@@ -23,13 +23,19 @@
     <string name="button_sign_up">Sign up</string>
     <string name="button_log_in_fb">Log in with Facebook</string>
     <string name="button_log_in_li">Log in with LinkedIn</string>
-    <string name="action_search">Search for a country, fund, program...</string>
+    <string name="action_search">Search for a country, fund, program…</string>
     <string name="button_search">Search</string>
-    <string name="button_country_regulations">Country Regulations</string>
-    <string name="button_coproduction_treaties">Coproduction Treaties</string>
-    <string name="button_calendar">Funding Calendar</string>
-    <string name="button_publications">Publications</string>
-    <string name="button_compare"><![CDATA[Compare & Track Funds]]></string>
+    <string name="button_country_regulations">Country</string>
+    <string name="button_coproduction_treaties">Coproduction</string>
+    <string name="button_calendar">Calendar</string>
+    <string name="button_publications">Publication</string>
+    <string name="button_compare">Compare</string>
     <string name="tag_line">Find funding for your project!</string>
     <string name="hint_search_country">Search for a country</string>
+    <string name="title_calendar">Funding Calendar</string>
+    <string name="title_publication">Publications</string>
+    <string name="title_compare">Compare Programs</string>
+    <string name="title_settings">Settings</string>
+    <string name="list_empty_no_result">"No result found for \'%1$s\'"</string>
+    <string name="list_empty_searching_for">Searching for \'%1$s\'</string>
 </resources>

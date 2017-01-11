@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_search_user"
     style="@style/MM.Vertical"
-    tools:context="com.olffi.app.olffi.SearchActivity"
+    tools:context="com.olffi.app.olffi.AlgoliaSearchActivity"
     android:background="@color/colorBackground"
     >
     <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
@@ -26,5 +26,7 @@
         android:drawSelectorOnTop="true"
         tools:listitem="@layout/layout_list_item_search_result"
         />
-
+    <com.olffi.app.olffi.view.TextViewApp android:id="@+id/emptyElement"
+        style="@style/TextView.Title"
+        />
 </LinearLayout>

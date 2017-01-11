@@ -1,7 +1,5 @@
 package com.olffi.app.olffi.webapp.controllers;
 
-import android.content.res.Resources;
-import android.graphics.PorterDuff;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -14,12 +12,6 @@ public class ProgressBarController {
 
     public ProgressBarController(ProgressBar progressBarInApp) {
         this.progressBarInApp = progressBarInApp;
-
-        if (progressBarInApp != null) {
-            Resources r = progressBarInApp.getContext().getResources();
-            progressBarInApp.getIndeterminateDrawable().setColorFilter(r.getColor(android.R.color.white), PorterDuff.Mode.SRC_IN);
-            progressBarInApp.getProgressDrawable().setColorFilter(r.getColor(android.R.color.white), PorterDuff.Mode.SRC_IN);
-        }
     }
 
     public void showLoading() {

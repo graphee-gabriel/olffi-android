@@ -16,14 +16,12 @@ import com.olffi.app.olffi.webapp.Navigator;
 public class WebViewController {
     private WebView webView;
     private View loadingView;
-    private ProgressBarController progressBarController;
     private Activity activity;
 
-    public WebViewController(Activity activity, WebView webView, View loading, ProgressBarController progressBarController) {
+    public WebViewController(Activity activity, WebView webView, View loading) {
         this.activity = activity;
         this.webView = webView;
         this.loadingView = loading;
-        this.progressBarController = progressBarController;
         init();
     }
 
@@ -46,10 +44,8 @@ public class WebViewController {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                //view.loadUrl("javascript:init('" + theArgumentYouWantToPass + "')");
                 if (loadingView.getVisibility() == View.VISIBLE)
                     loadingView.setVisibility(View.GONE);
-                progressBarController.hideLoading();
             }
         };
         webView.setWebViewClient(webViewClient);

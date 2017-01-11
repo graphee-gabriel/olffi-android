@@ -22,15 +22,12 @@
             android:background="@drawable/bg_app_clear"
             >
             <!--<include layout="@layout/layout_brand" />-->
+            <ProgressBar
+                android:id="@+id/progressBarCircular"
+                android:indeterminateOnly="true"
+                android:layout_width="@dimen/progress_bar_circular"
+                android:layout_height="@dimen/progress_bar_circular"
+                />
         </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/progressBarInApp"
-            android:visibility="gone"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:indeterminateOnly="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 </LinearLayout>

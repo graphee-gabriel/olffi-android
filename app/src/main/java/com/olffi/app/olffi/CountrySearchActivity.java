@@ -89,12 +89,15 @@ public class CountrySearchActivity extends SearchBaseActivity {
     @Override
     public void onSearchEmpty() {
         filter(null);
+        setDataAdapter(dataFiltered);
+        setEmptyText(getSearchHint());
     }
 
     @Override
     public void onSearch(String query) {
         filter(query);
         setDataAdapter(dataFiltered);
+        setEmptyText(getString(R.string.list_empty_no_result, query));
     }
 
     public void filter(String query) {

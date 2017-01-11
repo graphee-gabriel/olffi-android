@@ -57,7 +57,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/BackgroundImageTheme.NoActionBar">
+            android:theme="@style/BackgroundImageTheme.Clear.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -73,7 +73,7 @@
             android:name=".MenuActivity"
             android:theme="@style/BackgroundImageTheme.Clear.NoActionBar" />
         <activity
-            android:name=".SearchActivity"
+            android:name=".AlgoliaSearchActivity"
             android:theme="@style/BackgroundImageTheme.Clear.NoActionBar" />
         <activity
             android:name=".CredentialsWebAppActivity"

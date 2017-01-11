@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.olffi.app.olffi.controllers.ToolbarController;
 import com.olffi.app.olffi.data.App;
@@ -20,10 +21,12 @@ public abstract class SearchBaseActivity extends AppCompatActivity implements Se
 
     private SearchView searchView;
     private ProgressBar progressBar;
+    private TextView emptyTextView;
     private ListView listView;
     private BaseAdapter adapter;
     private String query;
     private ToolbarController toolbarController;
+    private String emptyText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +38,13 @@ public abstract class SearchBaseActivity extends AppCompatActivity implements Se
         onPreBuildAdapter();
         adapter = onBuildAdapter();
         listView = (ListView) findViewById(R.id.listView);
+        emptyTextView = (TextView) findViewById(R.id.emptyElement);
         listView.setAdapter(adapter);
         listView.setTextFilterEnabled(true);
         listView.setOnItemClickListener(this);
+        listView.setEmptyView(emptyTextView);
         adapter.notifyDataSetChanged();
+        setEmptyText(getSearchHint());
     }
 
     abstract public void onPreBuildAdapter();
@@ -86,7 +92,7 @@ public abstract class SearchBaseActivity extends AppCompatActivity implements Se
     @Override
     public boolean onQueryTextChange(String query) {
         this.query = query;
-        if (query == null || query.length() <= getMinSearchChar()) {
+        if (isQueryNull()) {
             onSearchEmpty();
         } else {
             onSearch(query);
@@ -107,11 +113,25 @@ public abstract class SearchBaseActivity extends AppCompatActivity implements Se
         return query;
     }
 
+    public boolean isQueryNull() {
+        return query == null || query.length() <= getMinSearchChar();
+    }
+
     public void showLoading() {
         progressBar.setVisibility(View.VISIBLE);
     }
 
     public void hideLoading() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    public String getEmptyText() {
+        return emptyText;
+    }
+
+    public void setEmptyText(String emptyText) {
+        this.emptyText = emptyText;
+        if (emptyTextView != null)
+        emptyTextView.setText(emptyText);
     }
 }

@@ -7,7 +7,7 @@ import com.olffi.app.olffi.CountrySearchActivity;
 import com.olffi.app.olffi.CredentialsWebAppActivity;
 import com.olffi.app.olffi.LoadUrlWebAppActivity;
 import com.olffi.app.olffi.MenuActivity;
-import com.olffi.app.olffi.SearchActivity;
+import com.olffi.app.olffi.AlgoliaSearchActivity;
 
 /**
  * Created by gabrielmorin on 10/06/2016.
@@ -33,7 +33,7 @@ public class App {
     }
 
     public static void startSearch(Activity activity) {
-        Intent intent = new Intent(activity, SearchActivity.class);
+        Intent intent = new Intent(activity, AlgoliaSearchActivity.class);
         activity.startActivity(intent);
         activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }

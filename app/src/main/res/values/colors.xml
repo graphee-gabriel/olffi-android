@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorEnergized">#FBEE23</color>
-    <color name="colorShadow">#33000000</color>
+    <color name="colorShadowThin">#33000000</color>
+    <color name="colorShadow">#DD000000</color>
     <color name="colorWhite">#fff</color>
     <color name="colorGlassThick">#CCffffff</color>
     <color name="colorGlass">#88ffffff</color>
@@ -13,13 +14,14 @@
     <color name="colorPrimaryStrong">#01ecec</color>
     <color name="colorPrimaryLight">#d8fefa</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#a41e14</color>
-    <color name="colorButton">#eee</color>
+    <!--<color name="colorAccent">#a41e14</color>-->
+    <color name="colorAccent">@color/colorBlack</color>
+    <color name="colorButton">@color/colorWhite</color>
     <color name="colorFacebook">#3b5998</color>
     <color name="colorLinkedIn">#0077B5</color>
 
     <color name="colorToolbar">@color/colorEnergized</color>
-    <color name="colorDivider">@color/colorShadow</color>
+    <color name="colorDivider">@color/colorShadowThin</color>
     <color name="colorBackground">@color/colorTransparent</color>
     <color name="colorCardBackground">@color/colorGlassThick</color>
     <color name="colorImageButton">@color/colorDark</color>

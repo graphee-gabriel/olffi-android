@@ -9,12 +9,12 @@
     <ImageView style="@style/WW" android:id="@+id/logo"
         android:src="@drawable/olffi_logo_simple"
         />
-    <TextView android:id="@+id/title"
+    <com.olffi.app.olffi.view.TextViewApp android:id="@+id/title"
         style="@style/TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Online film financing"
-        android:textColor="@color/colorButton"
+        android:text="@string/tag_line"
+        android:textColor="@color/colorBlack"
         android:textSize="@dimen/text_brand_title"
         />
 

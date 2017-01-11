@@ -11,14 +11,13 @@ import com.olffi.app.olffi.search.SearchResultAdapter;
 
 import java.util.ArrayList;
 
-public class SearchActivity extends SearchBaseActivity implements AlgoliaSearchController.SearchResultListener {
+public class AlgoliaSearchActivity extends SearchBaseActivity implements AlgoliaSearchController.SearchResultListener {
 
-    private final static String TAG = SearchActivity.class.getSimpleName();
+    private final static String TAG = AlgoliaSearchActivity.class.getSimpleName();
 
     private SearchResultAdapter searchResultAdapter;
     private AlgoliaSearchController algoliaSearchController;
     private SearchResult data;
-
 
     @Override
     public void onPreBuildAdapter() {
@@ -61,16 +60,21 @@ public class SearchActivity extends SearchBaseActivity implements AlgoliaSearchC
     public void onSearchEmpty() {
         setAdapterData(null);
         hideLoading();
+        setEmptyText(getSearchHint());
     }
 
     @Override
     public void onSearch(String query) {
+        setEmptyText(getString(R.string.list_empty_searching_for, query));
+        setAdapterData(null);
         showLoading();
         algoliaSearchController.searchAsync(query);
     }
 
     @Override
     public void onResult(SearchResult data) {
+        if (!isQueryNull())
+            setEmptyText(getString(R.string.list_empty_no_result, getQuery()));
         this.data = data;
         setAdapterData(data);
         hideLoading();

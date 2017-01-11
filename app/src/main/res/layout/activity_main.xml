@@ -8,18 +8,12 @@
 
     <include layout="@layout/layout_brand" />
 
-    <TextView
-        style="@style/TextView.Title"
-        android:text="@string/tag_line"
-        android:textColor="@color/colorWhite"
-        android:padding="@dimen/margin_half"
-        />
-
     <LinearLayout android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="@dimen/margin_half">
+        android:padding="@dimen/margin_half"
+        android:background="@color/colorShadow">
         <RelativeLayout style="@style/WW"
             android:layout_margin="@dimen/margin_half">
 
@@ -58,7 +52,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
-            <Button  android:id="@+id/buttonSignIn"
+            <Button android:id="@+id/buttonSignIn"
                 style="@style/MW"
                 android:layout_margin="@dimen/margin_half"
                 android:text="@string/button_log_in"
