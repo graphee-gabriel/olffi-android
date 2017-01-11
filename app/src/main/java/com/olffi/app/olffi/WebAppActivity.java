@@ -1,66 +1,40 @@
 package com.olffi.app.olffi;
 
-import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.facebook.AccessToken;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.olffi.app.olffi.data.App;
-import com.olffi.app.olffi.data.UserPreferences;
 import com.olffi.app.olffi.notifications.RegistrationIntentService;
+import com.olffi.app.olffi.webapp.controllers.ProgressBarController;
+import com.olffi.app.olffi.webapp.controllers.WebViewController;
 
 public class WebAppActivity extends AppCompatActivity {
 
     private static final String TAG = WebAppActivity.class.getName();
-    private WebView webView;
-    private View loading;
-    private ProgressBar progressBarInApp;
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
-    private boolean isReceiverRegistered;
+    private WebViewController webViewController;
+    private ProgressBarController progressBarController;
+    //private BroadcastReceiver mRegistrationBroadcastReceiver;
+    //private boolean isReceiverRegistered;
 
-
-    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_app_activity);
-        UserPreferences pref = new UserPreferences(this);
 
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                /*SharedPreferences sharedPreferences =
-                        PreferenceManager.getDefaultSharedPreferences(context);
-                boolean sentToken = sharedPreferences
-                        .getBoolean(UserPreferences.SENT_TOKEN_TO_SERVER, false);
-                if (sentToken) {
-                } else {
-                }*/
-            }
-        };
-
-        // Registering BroadcastReceiver
-        registerReceiver();
+        setupCookies();
+        //setupReceiver();
 
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.
@@ -68,84 +42,60 @@ public class WebAppActivity extends AppCompatActivity {
             startService(intent);
         }
 
-        progressBarInApp = (ProgressBar) findViewById(R.id.progressBarInApp);
-        loading = findViewById(R.id.loading);
-        webView = (WebView) findViewById(R.id.webView);
+        View loadingView = findViewById(R.id.loadingView);
+        WebView webView = (WebView) findViewById(R.id.webView);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBarInApp);
+        //TextView titleTextView = (TextView) loadingView.findViewById(R.id.title);
+        //titleTextView.setTextColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        progressBarController = new ProgressBarController(progressBar);
+        webViewController = new WebViewController(this, webView, loadingView, progressBarController);
+    }
 
-        CookieManager cookieManager = CookieManager.getInstance();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            CookieSyncManager.createInstance(this);
-        }
-        cookieManager.setAcceptCookie(true);
-        if (progressBarInApp != null) {
-            progressBarInApp.getIndeterminateDrawable().setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_IN);
-            progressBarInApp.getProgressDrawable().setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_IN);
-            showLoading();
-        }
-
-        if (webView != null) {
-            webView.getSettings().setJavaScriptEnabled(true);
-            WebViewClient webViewClient = new WebViewClient() {
-
-                @Override
-                public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                    Toast.makeText(WebAppActivity.this, description, Toast.LENGTH_SHORT).show();
-                }
-
-
-                @Override
-                public void onLoadResource(WebView view, String url) {
-                    super.onLoadResource(view, url);
-                    if (url.contains("logout")) {
-                        new UserPreferences(WebAppActivity.this).logOut();
-                        App.startActivityClearTop(WebAppActivity.this, MainActivity.class);
-                    }
-                }
-
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                    //view.loadUrl("javascript:init('" + theArgumentYouWantToPass + "')");
-                    if (loading.getVisibility() == View.VISIBLE)
-                        loading.setVisibility(View.GONE);
-                    hideLoading();
-                }
-            };
-            webView.setWebViewClient(webViewClient);
-
-            String credentials = "";
-            if (pref.isLoggedInWithFacebook()) {
-                credentials = getCredentials(AccessToken.getCurrentAccessToken().getToken(), "facebook");
-            } else if (pref.isLoggedInWithLinkedIn()) {
-                credentials = getCredentials(pref.getTokenLinkedIn(), "linkedin");
-            } else if (pref.isLoggedInWithEmail()) {
-                credentials = getCredentials(pref.getTokenBasicAuth(), "basic");
-            }
-            String url = "https://www.olffi.com/app"+credentials;
-            webView.loadUrl(url);
-        }
-
+    public void loadUrl(String url) {
+        progressBarController.showLoading();
+        webViewController.loadUrl(url);
     }
 
     @Override
     public void onBackPressed() {
-        if (webView != null && webView.canGoBack()) {
-            webView.goBack();
-        } else {
+        if (!webViewController.handlesBackPressed())
             super.onBackPressed();
-        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver();
+        //registerReceiver();
     }
 
     @Override
     protected void onPause() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
-        isReceiverRegistered = false;
+        //LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        //isReceiverRegistered = false;
         super.onPause();
+    }
+
+    private void setupCookies() {
+        CookieManager cookieManager = CookieManager.getInstance();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager.createInstance(this);
+        }
+        cookieManager.setAcceptCookie(true);
+    }
+/*
+    private void setupReceiver() {
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                *//*SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+                boolean sentToken = sharedPreferences
+                        .getBoolean(UserPreferences.SENT_TOKEN_TO_SERVER, false);
+                if (sentToken) {
+                } else {
+                }*//*
+            }
+        };
     }
 
     private void registerReceiver() {
@@ -154,7 +104,8 @@ public class WebAppActivity extends AppCompatActivity {
                     new IntentFilter(UserPreferences.REGISTRATION_COMPLETE));
             isReceiverRegistered = true;
         }
-    }
+    }*/
+
     /**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from
@@ -174,24 +125,5 @@ public class WebAppActivity extends AppCompatActivity {
             return false;
         }
         return true;
-    }
-
-
-
-
-    private void showLoading() {
-        if (progressBarInApp != null)
-            progressBarInApp.setVisibility(View.VISIBLE);
-    }
-
-    private void hideLoading() {
-        if (progressBarInApp != null)
-            progressBarInApp.setVisibility(View.GONE);
-    }
-
-    private String getCredentials(String token, String type) {
-        if (token.isEmpty() || type.isEmpty())
-            return "";
-        return "?token=" + token + "&type=" + type;
     }
 }

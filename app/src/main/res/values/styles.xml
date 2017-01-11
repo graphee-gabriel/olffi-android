@@ -1,17 +1,32 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/colorPrimary</item>
+        <!--<item name="android:windowBackground">@color/colorPrimary</item>-->
         <item name="android:buttonStyle">@style/Button</item>
-        <item name="android:textViewStyle">@style/TextView</item>
     </style>
+
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="BackgroundImageTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/bg_app_darken</item>
+    </style>
+
+
+    <style name="BackgroundImageTheme.NoActionBar" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_app_darken</item>
+    </style>
+
+
+    <style name="BackgroundImageTheme.Clear.NoActionBar" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_app_clear</item>
     </style>
 
     <style name="Button" parent="MW">
@@ -25,11 +40,28 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="Toolbar" parent="MW">
+        <item name="android:background">@color/colorToolbar</item>
+    </style>
+
     <style name="TextView" parent="MW">
         <item name="android:padding">@dimen/margin</item>
-        <item name="android:textColor">@color/colorButton</item>
+        <!--<item name="android:textColor">@color/colorButton</item>-->
         <item name="android:textSize">@dimen/abc_text_size_small_material</item>
+        <item name="android:textColor">@android:color/black</item>
         <item name="android:gravity">center</item>
+        <item name="android:baselineAligned">false</item>
+    </style>
+
+    <style name="TextView.Title.Card" parent="TextView.Title">
+        <item name="android:textSize">@dimen/abc_text_size_small_material</item>
+
+    </style>
+
+    <style name="TextView.Title" parent="TextView">
+        <item name="android:textSize">@dimen/abc_text_size_title_material_toolbar</item>
+        <item name="android:textStyle">bold</item>
+
     </style>
 
     <style name="EdiTextLogin" parent="MW">
@@ -38,6 +70,21 @@
         <item name="android:background">@drawable/bg_edit_text</item>
         <item name="android:padding">@dimen/margin</item>
     </style>
+
+    <style name="Divider">
+        <item name="android:background">@color/colorDivider</item>
+    </style>
+
+    <style name="Divider.Vertical" parent="Divider">
+        <item name="android:layout_width">@dimen/divider</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Divider.Horizontal" parent="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider</item>
+    </style>
+
 
     <style name="MW">
         <item name="android:layout_width">match_parent</item>
@@ -83,4 +130,6 @@
     <style name="MM.Vertical.Padding" parent="MM.Vertical">
         <item name="android:padding">@dimen/margin</item>
     </style>
+
+    <dimen name="divider">1dp</dimen>
 </resources>

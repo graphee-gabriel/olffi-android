@@ -6,12 +6,18 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="margin">16dp</dimen>
     <dimen name="margin_half">8dp</dimen>
+    <dimen name="margin_quarter">4dp</dimen>
     <dimen name="progressBar">66dp</dimen>
     <dimen name="margin_double">32dp</dimen>
     <dimen name="logo">90dp</dimen>
     <dimen name="margin_ic_left">12dp</dimen>
     <dimen name="icon_button_left_linkedin">24dp</dimen>
     <dimen name="icon_button_left_facebook">21dp</dimen>
+    <dimen name="horizontalProgressBarHeight">6dp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="ic_menu_button_max_height">90dp</dimen>
+    <dimen name="toolbar_logo_height">40dp</dimen>
+    <dimen name="toolbar_button_height">52dp</dimen>
 
 
 </resources>

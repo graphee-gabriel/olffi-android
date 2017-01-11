@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_menu"
+    style="@style/MM.Vertical"
+    android:background="@color/colorBackground"
+    tools:context="com.olffi.app.olffi.MenuActivity">
+
+    <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        >
+        <ImageView
+            android:layout_height="@dimen/toolbar_logo_height"
+            android:layout_width="128dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/olffi_logo_simple"
+            android:paddingLeft="-10dp"
+            android:paddingStart="-10dp"
+            android:cropToPadding="false"/>
+        <ImageView android:id="@+id/button_settings"
+            android:layout_width="@dimen/toolbar_button_height"
+            android:layout_height="@dimen/toolbar_button_height"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_settings"
+            android:padding="@dimen/margin_half"
+            />
+    </android.support.v7.widget.Toolbar>
+    <TextView
+        style="@style/TextView.Title"
+        android:text="@string/tag_line"
+        android:background="@color/colorTransparent"
+        />
+    <LinearLayout
+        style="@style/MM.Vertical"
+        android:padding="@dimen/margin_quarter"
+        >
+        <LinearLayout
+            style="@style/MM"
+            android:layout_weight="1">
+            <include android:id="@+id/button_search"
+                layout="@layout/layout_menu_button"
+                />
+            <include android:id="@+id/button_country_regulations"
+                layout="@layout/layout_menu_button"
+                />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/MM"
+            android:layout_weight="1">
+            <include android:id="@+id/button_coproduction_treaties"
+                layout="@layout/layout_menu_button"
+                />
+            <include android:id="@+id/button_calendar"
+                layout="@layout/layout_menu_button"
+                />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/MM"
+            android:layout_weight="1">
+            <include android:id="@+id/button_publications"
+                layout="@layout/layout_menu_button"
+                />
+            <include android:id="@+id/button_compare"
+                layout="@layout/layout_menu_button"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

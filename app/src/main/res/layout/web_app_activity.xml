@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:animateLayoutChanges="true">
-
-    <WebView android:id="@+id/webView"
-        style="@style/MM"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MW.Vertical">
+    <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        android:visibility="gone"
         />
-    <LinearLayout android:id="@+id/loading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+
+    <RelativeLayout
+        style="@style/MM.Vertical"
         android:gravity="center"
         android:background="@drawable/bg_app_darken"
+        android:animateLayoutChanges="true"
         >
-        <include layout="@layout/layout_brand" />
-    </LinearLayout>
+        <WebView android:id="@+id/webView"
+            style="@style/MM"
+            />
 
-    <ProgressBar
-        android:id="@+id/progressBarInApp"
-        android:visibility="gone"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:indeterminateOnly="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
-</RelativeLayout>
+        <LinearLayout android:id="@+id/loadingView"
+            style="@style/MM.Vertical"
+            android:gravity="center"
+            android:background="@drawable/bg_app_clear"
+            >
+            <!--<include layout="@layout/layout_brand" />-->
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBarInApp"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:indeterminateOnly="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</LinearLayout>

@@ -8,6 +8,13 @@
 
     <include layout="@layout/layout_brand" />
 
+    <TextView
+        style="@style/TextView.Title"
+        android:text="@string/tag_line"
+        android:textColor="@color/colorWhite"
+        android:padding="@dimen/margin_half"
+        />
+
     <LinearLayout android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

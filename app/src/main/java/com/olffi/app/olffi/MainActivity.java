@@ -121,7 +121,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startWebApp() {
-        App.startWebApp(this);
+        //App.startWebApp(this);
+        //App.startSearch(this);
+        App.startMenu(this);
     }
 
     private void startSignIn() {
@@ -134,16 +136,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private boolean testFacebookTokenAndLaunchWebApp() {
-        if (pref.isLoggedInWithFacebook()) {
-            AccessToken accessTokenFacebook = AccessToken.getCurrentAccessToken();
-            if (accessTokenFacebook != null) {
-                pref.logInWithFacebook(accessTokenFacebook.getToken());
-                startWebApp();
-            }
-            return true;
+    private void testFacebookTokenAndLaunchWebApp() {
+        AccessToken accessTokenFacebook = AccessToken.getCurrentAccessToken();
+        Log.d("_FB", "token test");
+        if (accessTokenFacebook != null) {
+            startWebApp();
+            Log.d("_FB", "token ok");
+            pref.logInWithFacebook(accessTokenFacebook.getToken());
         }
-        return false;
     }
 
     private boolean testBasicAuthAndLaunchWebApp() {

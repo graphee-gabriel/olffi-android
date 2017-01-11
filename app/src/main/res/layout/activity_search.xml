@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_search_user"
+    style="@style/MM.Vertical"
+    tools:context="com.olffi.app.olffi.SearchActivity"
+    android:background="@color/colorBackground"
+    >
+    <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        />
+
+    <ProgressBar android:id="@+id/progressBar"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:indeterminate="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/horizontalProgressBarHeight"
+        />
+
+    <ListView android:id="@+id/listView"
+        android:visibility="visible"
+        style="@style/MM"
+        android:dividerHeight="0dp"
+        android:divider="@android:color/transparent"
+        android:drawSelectorOnTop="true"
+        tools:listitem="@layout/layout_list_item_search_result"
+        />
+
+</LinearLayout>

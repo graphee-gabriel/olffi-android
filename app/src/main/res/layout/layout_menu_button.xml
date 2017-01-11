@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    style="@style/MM"
+    android:layout_margin="@dimen/margin_quarter"
+    android:layout_weight="1"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardBackgroundColor="@color/colorCardBackground"
+    >
+    <LinearLayout
+        style="@style/MM.Vertical"
+        android:padding="@dimen/margin_half"
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <ImageView android:id="@+id/img"
+            style="@style/WW"
+            android:padding="@dimen/margin_half"
+            tool:src="@drawable/ic_calendar"
+            />
+
+        <TextView android:id="@+id/text"
+            style="@style/WW"
+            android:gravity="center"
+            android:padding="@dimen/margin_half"
+            android:textColor="@color/colorDark"
+            tool:text="Compare and Track Fundings"/>
+
+</LinearLayout>
+</android.support.v7.widget.CardView>

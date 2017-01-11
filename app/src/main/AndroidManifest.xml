@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.olffi.app.olffi">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.olffi.app.olffi">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <permission android:name="com.olffi.app.olffi.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <permission
+        android:name="com.olffi.app.olffi.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="com.olffi.app.olffi.permission.C2D_MESSAGE" />
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -18,7 +22,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -26,35 +29,35 @@
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.olffi.app.olffi.gcm" />
             </intent-filter>
         </receiver>
 
         <service
-            android:name="com.olffi.app.olffi.notifications.MyGcmListenerService"
-            android:exported="false" >
+            android:name=".notifications.MyGcmListenerService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
         <service
-            android:name="com.olffi.app.olffi.notifications.MyInstanceIDListenerService"
+            android:name=".notifications.MyInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
         <service
-            android:name="com.olffi.app.olffi.notifications.RegistrationIntentService"
-            android:exported="false">
-        </service>
+            android:name=".notifications.RegistrationIntentService"
+            android:exported="false" />
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/BackgroundImageTheme">
+            android:theme="@style/BackgroundImageTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -65,7 +68,23 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/BackgroundImageTheme" />
+            android:theme="@style/BackgroundImageTheme.NoActionBar" />
+        <activity
+            android:name=".MenuActivity"
+            android:theme="@style/BackgroundImageTheme.Clear.NoActionBar" />
+        <activity
+            android:name=".SearchActivity"
+            android:theme="@style/BackgroundImageTheme.Clear.NoActionBar" />
+        <activity
+            android:name=".CredentialsWebAppActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LoadUrlWebAppActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CountrySearchActivity"
+            android:theme="@style/BackgroundImageTheme.Clear.NoActionBar"
+            />
     </application>
 
 </manifest>
