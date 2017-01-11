@@ -25,7 +25,7 @@
             android:padding="@dimen/margin_half"
             />
     </android.support.v7.widget.Toolbar>
-    <TextView
+    <com.olffi.app.olffi.view.TextViewApp
         style="@style/TextView.Title"
         android:text="@string/tag_line"
         android:background="@color/colorTransparent"

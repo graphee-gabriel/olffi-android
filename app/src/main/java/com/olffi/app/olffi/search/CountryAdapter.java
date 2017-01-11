@@ -48,7 +48,7 @@ public class CountryAdapter extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = layoutInflater.inflate(android.R.layout.simple_list_item_1, null);
+            convertView = layoutInflater.inflate(R.layout.layout_simple_list_item_1, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -63,6 +63,7 @@ public class CountryAdapter extends BaseAdapter {
     public void setData(List<Country> data) {
         this.data = data;
     }
+
     private static class ViewHolder {
         View view;
         TextView text;

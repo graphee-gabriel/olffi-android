@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.linkedin.platform.LISessionManager;
@@ -32,33 +30,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pref = new UserPreferences(this);
-        SdkInitializer.facebook(this, new FacebookSdk.InitializeCallback() {
-            @Override
-            public void onInitialized() {
-                testBasicAuthAndLaunchWebApp();
-                testLinkedInTokenAndLaunchWebApp();
-                testFacebookTokenAndLaunchWebApp();
-                callbackManager = CallbackManager.Factory.create();
+        SdkInitializer.facebook(this, () -> {
+            if (new UserPreferences(this).isLoggedIn())
+                startApp();
+            callbackManager = CallbackManager.Factory.create();
 
-                LoginManager.getInstance().registerCallback(callbackManager,
-                        new FacebookCallback<LoginResult>() {
-                            @Override
-                            public void onSuccess(LoginResult loginResult) {
-                                // App code
-                                testFacebookTokenAndLaunchWebApp();
-                            }
+            LoginManager.getInstance().registerCallback(callbackManager,
+                    new FacebookCallback<LoginResult>() {
+                        @Override
+                        public void onSuccess(LoginResult loginResult) {
+                            // App code
+                            testFacebookTokenAndLaunchWebApp();
+                        }
 
-                            @Override
-                            public void onCancel() {
-                                // App code
-                            }
+                        @Override
+                        public void onCancel() {
+                            // App code
+                        }
 
-                            @Override
-                            public void onError(FacebookException exception) {
-                                // App code
-                            }
-                        });
-            }
+                        @Override
+                        public void onError(FacebookException exception) {
+                            // App code
+                        }
+                    });
         });
 
         setContentView(R.layout.activity_main);
@@ -69,24 +63,12 @@ public class MainActivity extends AppCompatActivity {
         Button buttonSignUp = (Button) findViewById(R.id.buttonSignUp);
 
         if (buttonSignUp != null)
-            buttonSignUp.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startSignUp();
-                }
-            });
+            buttonSignUp.setOnClickListener(v -> startSignUp());
         if (buttonSignIn != null)
-            buttonSignIn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startSignIn();
-                }
-            });
+            buttonSignIn.setOnClickListener(v -> startSignIn());
 
         if (buttonLinkedIn != null)
-            buttonLinkedIn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            buttonLinkedIn.setOnClickListener(v ->
                     Auth.linkedIn(MainActivity.this, new Auth.AuthResponse() {
                         @Override
                         public void onSuccess() {
@@ -97,18 +79,13 @@ public class MainActivity extends AppCompatActivity {
                         public void onFailure(String errorMessage) {
 
                         }
-                    });
-                }
-            });
+            }));
 
 
         if (buttonFacebook != null)
-            buttonFacebook.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, Arrays.asList("public_profile", "email"));
-                }
-            });
+            buttonFacebook.setOnClickListener(v ->
+                    LoginManager.getInstance().logInWithReadPermissions(MainActivity.this,
+                            Arrays.asList("public_profile", "email")));
 
 
     }
@@ -120,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
         LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
     }
 
-    private void startWebApp() {
-        //App.startWebApp(this);
+    private void startApp() {
+        //App.startApp(this);
         //App.startSearch(this);
         App.startMenu(this);
     }
@@ -140,26 +117,15 @@ public class MainActivity extends AppCompatActivity {
         AccessToken accessTokenFacebook = AccessToken.getCurrentAccessToken();
         Log.d("_FB", "token test");
         if (accessTokenFacebook != null) {
-            startWebApp();
+            startApp();
             Log.d("_FB", "token ok");
             pref.logInWithFacebook(accessTokenFacebook.getToken());
         }
     }
 
-    private boolean testBasicAuthAndLaunchWebApp() {
-        if (pref.isLoggedInWithEmail()) {
-            Log.d(TAG, "Auth: user is logged in: "+pref.getEmail()+" | "+pref.getTokenBasicAuth());
-            startWebApp();
-            return true;
-        }
-
-        Log.d(TAG, "Auth: user is not logged in");
-        return false;
-    }
-
     private boolean testLinkedInTokenAndLaunchWebApp() {
         if (pref.isLoggedInWithLinkedIn()) {
-                startWebApp();
+                startApp();
                 return true;
         }
         Log.d(TAG, "LinkedIn: no token available");

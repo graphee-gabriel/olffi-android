@@ -11,7 +11,7 @@
         card_view:cardCornerRadius="2dp"
         card_view:cardBackgroundColor="@color/colorBackground">
 
-        <TextView android:id="@+id/text"
+        <com.olffi.app.olffi.view.TextViewApp android:id="@+id/text"
             style="@style/TextView"
             android:gravity="left"
             tool:text="Test résultat tout ça tout ça" />

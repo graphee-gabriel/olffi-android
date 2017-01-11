@@ -14,13 +14,13 @@
             style="@style/MW.Vertical"
             android:padding="@dimen/margin_half">
 
-            <TextView android:id="@+id/text"
+            <com.olffi.app.olffi.view.TextViewApp android:id="@+id/text"
                 style="@style/TextView.Title.Card"
                 android:gravity="start"
                 android:padding="@dimen/margin_half"
                 tool:text="Test résultat tout ça tout ça" />
 
-            <TextView android:id="@+id/text2"
+            <com.olffi.app.olffi.view.TextViewApp android:id="@+id/text2"
                 style="@style/TextView"
                 android:gravity="start"
                 android:padding="@dimen/margin_half"
