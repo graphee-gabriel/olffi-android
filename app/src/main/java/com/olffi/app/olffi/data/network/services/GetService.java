@@ -1,5 +1,6 @@
 package com.olffi.app.olffi.data.network.services;
 
+import com.olffi.app.olffi.json.CoproductionTreaty;
 import com.olffi.app.olffi.json.Country;
 
 import java.util.List;
@@ -14,5 +15,8 @@ public interface GetService {
 
     @GET("api/country")
     Call<List<Country>> countryList();
+
+    @GET("api/coproduction-treaty")
+    Call<List<CoproductionTreaty>> coproductionTreatyList();
 
 }

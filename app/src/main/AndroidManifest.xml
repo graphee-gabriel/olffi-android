@@ -68,7 +68,7 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/BackgroundImageTheme.NoActionBar" />
+            android:theme="@style/BackgroundImageTheme.Clear.NoActionBar" />
         <activity
             android:name=".MenuActivity"
             android:theme="@style/BackgroundImageTheme.Clear.NoActionBar" />
@@ -83,6 +83,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CountrySearchActivity"
+            android:theme="@style/BackgroundImageTheme.Clear.NoActionBar" />
+        <activity
+            android:name=".CoproductionTreatySearchActivity"
             android:theme="@style/BackgroundImageTheme.Clear.NoActionBar"
             />
     </application>

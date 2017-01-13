@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import com.olffi.app.olffi.json.SearchResult;
 import com.olffi.app.olffi.search.AlgoliaIndexBuilder;
 import com.olffi.app.olffi.search.AlgoliaSearchController;
-import com.olffi.app.olffi.search.SearchResultAdapter;
+import com.olffi.app.olffi.search.adapter.SearchResultAdapter;
 
 import java.util.ArrayList;
 

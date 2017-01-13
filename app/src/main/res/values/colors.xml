@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorEnergized">#FBEE23</color>
+    <color name="colorShadowThinner">#11000000</color>
     <color name="colorShadowThin">#33000000</color>
     <color name="colorShadow">#DD000000</color>
     <color name="colorWhite">#fff</color>

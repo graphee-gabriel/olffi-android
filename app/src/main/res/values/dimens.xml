@@ -19,6 +19,7 @@
     <dimen name="toolbar_logo_height">40dp</dimen>
     <dimen name="toolbar_button_height">52dp</dimen>
     <dimen name="progress_bar_circular">60dp</dimen>
+    <dimen name="button_radius">3dp</dimen>
 
 
 </resources>

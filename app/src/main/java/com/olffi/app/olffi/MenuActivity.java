@@ -2,7 +2,6 @@ package com.olffi.app.olffi;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
 import com.olffi.app.olffi.controllers.ToolbarController;
@@ -58,7 +57,7 @@ public class MenuActivity extends AppCompatActivity implements MenuController.Me
 
     @Override
     public void onClickCoproductionTreaties(View view) {
-        Log.e(TAG, "onClickCoproductionTreaties: ");
+        App.startCoproductionTreatyList(this);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.olffi.app.olffi.search;
+package com.olffi.app.olffi.search.adapter;
 
 import android.content.Context;
 import android.text.Html;
@@ -57,18 +57,14 @@ public class SearchResultAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         SearchResultHit searchResult = data.get(i);
-        holder.text.setText(searchResult.program_name + " (" + searchResult.country_name + ")");
+        holder.textTitle.setText(searchResult.program_name + " (" + searchResult.country_name + ")");
+        holder.textSubtitle.setText(searchResult.fb_name);
+        holder.textLeft.setText(Html.fromHtml(HtmlHelper.bold("Level: ")
+                + "<br/>" + searchResult.level));
+        holder.textRight.setText(Html.fromHtml(HtmlHelper.bold("Activity: ")
+                + "<br/>" + searchResult.activity));
         //noinspection ConstantConditions
-        holder.text2.setText(Html.fromHtml(HtmlHelper.bold("Level: ")
-                + "<br/>" + searchResult.level
-                + "<br/>"
-                + "<br/>" + HtmlHelper.bold("Funding body: ")
-                + "<br/>" + searchResult.fb_name
-                + "<br/>"
-                + "<br/>" + HtmlHelper.bold("Activity: ")
-                + "<br/>" + searchResult.activity
-                + "<br/>"
-                + "<br/>" + HtmlHelper.bold("Project type: ")
+        holder.textDetails.setText(Html.fromHtml(HtmlHelper.bold("Project type: ")
                 + "<br/>" + (searchResult.project_type == null ? "" : TextUtils.join(", ", searchResult.project_type))
                 + "<br/>"
                 + "<br/>" + HtmlHelper.bold("Nature of project: ")
@@ -82,15 +78,21 @@ public class SearchResultAdapter extends BaseAdapter {
         this.data = data;
     }
 
-    static class ViewHolder {
+    private static class ViewHolder {
         View view;
-        TextView text;
-        TextView text2;
+        TextView textTitle;
+        TextView textSubtitle;
+        TextView textLeft;
+        TextView textRight;
+        TextView textDetails;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             this.view = view;
-            text = (TextView) view.findViewById(R.id.text);
-            text2 = (TextView) view.findViewById(R.id.text2);
+            textTitle = (TextView) view.findViewById(R.id.text_title);
+            textSubtitle = (TextView) view.findViewById(R.id.text_subtitle);
+            textLeft = (TextView) view.findViewById(R.id.text_left);
+            textRight = (TextView) view.findViewById(R.id.text_right);
+            textDetails = (TextView) view.findViewById(R.id.text_details);
         }
     }
 }

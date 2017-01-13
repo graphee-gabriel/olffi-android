@@ -3,6 +3,7 @@ package com.olffi.app.olffi.data;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.olffi.app.olffi.CoproductionTreatySearchActivity;
 import com.olffi.app.olffi.CountrySearchActivity;
 import com.olffi.app.olffi.CredentialsWebAppActivity;
 import com.olffi.app.olffi.LoadUrlWebAppActivity;
@@ -38,9 +39,14 @@ public class App {
         activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
-
     public static void startCountryList(Activity activity) {
         Intent intent = new Intent(activity, CountrySearchActivity.class);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    public static void startCoproductionTreatyList(Activity activity) {
+        Intent intent = new Intent(activity, CoproductionTreatySearchActivity.class);
         activity.startActivity(intent);
         activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }

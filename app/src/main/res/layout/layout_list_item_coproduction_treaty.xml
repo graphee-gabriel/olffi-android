@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    style="@style/MW">
+
+    <android.support.v7.widget.CardView
+        style="@style/MW"
+        android:layout_margin="@dimen/margin_quarter"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardBackgroundColor="@color/colorCardBackground">
+        <LinearLayout
+            style="@style/MW.Vertical"
+            android:padding="@dimen/margin_half">
+
+            <com.olffi.app.olffi.view.TextViewApp android:id="@+id/text"
+                style="@style/TextView.Title.Card"
+                android:gravity="start"
+                android:padding="@dimen/margin_half"
+                tool:text="Test résultat tout ça tout ça" />
+
+            <com.olffi.app.olffi.view.TextViewApp android:id="@+id/text2"
+                style="@style/TextView"
+                android:gravity="start"
+                android:padding="@dimen/margin_half"
+                tool:text="Test résultat tout ça tout ça" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

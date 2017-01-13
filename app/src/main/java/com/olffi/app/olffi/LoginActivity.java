@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
-import android.content.DialogInterface;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -19,16 +18,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.olffi.app.olffi.data.App;
 import com.olffi.app.olffi.data.Auth;
@@ -106,23 +102,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 signUpNameView.setVisibility(View.VISIBLE);
         }
 
-        mViewPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == login && !mIsSignUp || id == R.id.sign_up || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
+        mViewPassword.setOnEditorActionListener((textView, id, keyEvent) -> {
+            if (id == login && !mIsSignUp || id == R.id.sign_up || id == EditorInfo.IME_NULL) {
+                attemptLogin();
+                return true;
             }
+            return false;
         });
         if (emailSignInButton != null)
-            emailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
+            emailSignInButton.setOnClickListener(view -> attemptLogin());
 
         mProgressBar = (ProgressBar) findViewById(login_progress);
         if (mProgressBar != null) {
@@ -209,22 +197,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Auth.signUp(mFirstName, mLastName, mEmail, mPassword, new Auth.AuthResponse() {
             @Override
             public void onSuccess() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        onSignUpSuccess();
-                    }
-                });
+                runOnUiThread(() -> onSignUpSuccess());
             }
 
             @Override
             public void onFailure(String errorMessage) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        onSignUpFailure();
-                    }
-                });
+                runOnUiThread(() -> onSignUpFailure());
             }
         });
     }
@@ -236,7 +214,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void onSignUpFailure() {
         showProgress(false);
-        showAlertDialog("Could not connect to the server. Please try again later.", false);
+        showAlertDialog("Could not connect to the server. Please try again later.", true);
     }
 
     private void onLogin() {
@@ -244,22 +222,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Auth.logIn(this, mEmail, mPassword, new Auth.AuthResponse() {
             @Override
             public void onSuccess() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        onLoginSuccess();
-                    }
-                });
+                runOnUiThread(() -> onLoginSuccess());
             }
 
             @Override
             public void onFailure(String errorMessage) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        onLoginFailure();
-                    }
-                });
+                runOnUiThread(() -> onLoginFailure());
             }
         });
     }
@@ -433,14 +401,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private AlertDialog showAlertDialog(String message, final boolean error) {
-        return new AlertDialog.Builder(getBaseContext())
+        return new AlertDialog.Builder(this)
                 .setMessage(message)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        // restart activity without sign up intent
-                        if (!error)
-                            App.startActivityClearTop(LoginActivity.this, LoginActivity.class);
-                    }
+                .setPositiveButton("Ok", (arg0, arg1) -> {
+                    // restart activity without sign up intent
+                    if (!error)
+                        App.startActivityClearTop(LoginActivity.this, LoginActivity.class);
                 })
                 .show();
     }

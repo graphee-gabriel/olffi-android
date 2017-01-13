@@ -1,11 +1,10 @@
-package com.olffi.app.olffi.search;
+package com.olffi.app.olffi.search.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.olffi.app.olffi.R;
@@ -18,7 +17,7 @@ import java.util.List;
  * Created by gabrielmorin on 05/01/2017.
  */
 
-public class CountryAdapter extends BaseAdapter {
+public class CountryAdapter extends DataBaseAdapter<Country> {
     private final static String TAG = CountryAdapter.class.getSimpleName();
 
     private List<Country> data = new ArrayList<>();
@@ -60,6 +59,7 @@ public class CountryAdapter extends BaseAdapter {
         return convertView;
     }
 
+    @Override
     public void setData(List<Country> data) {
         this.data = data;
     }

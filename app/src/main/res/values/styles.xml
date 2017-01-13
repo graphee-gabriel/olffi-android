@@ -29,8 +29,10 @@
         <item name="android:windowBackground">@drawable/bg_app_clear</item>
     </style>
 
-    <style name="Button" parent="MW">
-        <item name="android:background">@drawable/bg_button</item>
+    <style name="Button" parent="Base.Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/bg_button_colored</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">@dimen/margin</item>
         <item name="android:textColor">@color/colorButton</item>
         <item name="android:textSize">@dimen/abc_text_size_small_material</item>
@@ -38,6 +40,8 @@
         <item name="android:textStyle">bold</item>
         <item name="android:drawablePadding">@dimen/margin</item>
         <item name="android:gravity">center</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <!--<item name="android:colorButtonNormal">@color/colorAccent</item>-->
     </style>
 
     <style name="Toolbar" parent="MW">

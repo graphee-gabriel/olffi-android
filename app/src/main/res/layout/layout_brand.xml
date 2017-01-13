@@ -8,6 +8,7 @@
     android:orientation="vertical">
     <ImageView style="@style/WW" android:id="@+id/logo"
         android:src="@drawable/olffi_logo_simple"
+        android:padding="@dimen/margin"
         />
     <com.olffi.app.olffi.view.TextViewApp android:id="@+id/title"
         style="@style/TextView"
@@ -16,6 +17,8 @@
         android:text="@string/tag_line"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/text_brand_title"
+        android:padding="@dimen/margin"
+        android:layout_margin="@dimen/margin"
         />
 
 </LinearLayout>
