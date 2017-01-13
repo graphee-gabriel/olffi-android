@@ -33,6 +33,7 @@ public class WebViewController {
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 Toast.makeText(activity, description, Toast.LENGTH_SHORT).show();
+                //view.loadUrl("about:blank"); // blocks back button
             }
 
 
