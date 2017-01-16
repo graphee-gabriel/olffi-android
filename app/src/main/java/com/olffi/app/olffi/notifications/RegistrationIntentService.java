@@ -50,26 +50,28 @@ public class RegistrationIntentService extends IntentService {
     private void sendRegistrationToServer(final String token) {
         // Add custom implementation, as needed.
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        NotificationToken.send(this, token, new Auth.AuthResponse() {
-            @Override
-            public void onSuccess() {
-                sharedPreferences.edit().putBoolean(UserPreferences.SENT_TOKEN_TO_SERVER, true).apply();
-                try {
-                    subscribeTopics(token);
-                } catch (IOException e) {
-                    e.printStackTrace();
+        if (!sharedPreferences.getBoolean(UserPreferences.SENT_TOKEN_TO_SERVER, false)) {
+            NotificationToken.send(this, token, new Auth.AuthResponse() {
+                @Override
+                public void onSuccess() {
+                    sharedPreferences.edit().putBoolean(UserPreferences.SENT_TOKEN_TO_SERVER, true).apply();
+                    try {
+                        subscribeTopics(token);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Intent registrationComplete = new Intent(UserPreferences.REGISTRATION_COMPLETE);
+                    LocalBroadcastManager.getInstance(RegistrationIntentService.this).sendBroadcast(registrationComplete);
+                    Log.d(TAG, "sendRegistrationToServer SUCCESS!");
                 }
-                Intent registrationComplete = new Intent(UserPreferences.REGISTRATION_COMPLETE);
-                LocalBroadcastManager.getInstance(RegistrationIntentService.this).sendBroadcast(registrationComplete);
-                Log.d(TAG, "sendRegistrationToServer SUCCESS!");
-            }
 
-            @Override
-            public void onFailure(String errorMessage) {
-                sharedPreferences.edit().putBoolean(UserPreferences.SENT_TOKEN_TO_SERVER, false).apply();
-                Log.d(TAG, "sendRegistrationToServer failure...");
-            }
-        });
+                @Override
+                public void onFailure(String errorMessage) {
+                    sharedPreferences.edit().putBoolean(UserPreferences.SENT_TOKEN_TO_SERVER, false).apply();
+                    Log.d(TAG, "sendRegistrationToServer failure...");
+                }
+            });
+        }
     }
 
     /**

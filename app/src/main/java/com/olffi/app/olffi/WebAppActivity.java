@@ -22,9 +22,10 @@ public class WebAppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_app_activity);
         setupCookies();
-        View loadingView = findViewById(R.id.loadingView);
+        View loadingView = findViewById(R.id.view_loading);
+        View errorView = findViewById(R.id.view_error);
         WebView webView = (WebView) findViewById(R.id.webView);
-        webViewController = new WebViewController(this, webView, loadingView);
+        webViewController = new WebViewController(this, webView, loadingView, errorView);
     }
 
     public void loadUrl(String url) {

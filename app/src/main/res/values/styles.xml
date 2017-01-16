@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorEnergized</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <!--<item name="android:windowBackground">@color/colorPrimary</item>-->
@@ -24,6 +24,10 @@
         <item name="android:windowBackground">@drawable/bg_app_darken</item>
     </style>
 
+
+    <style name="BackgroundImageTheme.Clear" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/bg_app_clear</item>
+    </style>
 
     <style name="BackgroundImageTheme.Clear.NoActionBar" parent="AppTheme.NoActionBar">
         <item name="android:windowBackground">@drawable/bg_app_clear</item>

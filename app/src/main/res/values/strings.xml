@@ -31,6 +31,7 @@
     <string name="button_publications">Publication</string>
     <string name="button_compare">Compare</string>
     <string name="tag_line">Find funding for your project!</string>
+    <string name="web_view_error">Olffi can\'t connect to the network</string>
     <string name="hint_search_country">Search for a country</string>
     <string name="title_calendar">Funding Calendar</string>
     <string name="title_publication">Publications</string>

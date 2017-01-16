@@ -9,7 +9,8 @@
     <dimen name="margin_quarter">4dp</dimen>
     <dimen name="progressBar">66dp</dimen>
     <dimen name="margin_double">32dp</dimen>
-    <dimen name="logo">90dp</dimen>
+    <dimen name="logo_height_medium">50dp</dimen>
+    <dimen name="logo_height_big">120dp</dimen>
     <dimen name="margin_ic_left">12dp</dimen>
     <dimen name="icon_button_left_linkedin">24dp</dimen>
     <dimen name="icon_button_left_facebook">21dp</dimen>
