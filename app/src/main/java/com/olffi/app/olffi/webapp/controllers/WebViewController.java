@@ -55,7 +55,7 @@ public class WebViewController {
                 } else {
                     show(webView);
                 }
-                Log.e(TAG, "onPageFinished: "+url);
+                //Log.e(TAG, "onPageFinished: "+url);
             }
         };
         webView.setWebViewClient(webViewClient);
