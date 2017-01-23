@@ -22,16 +22,7 @@ public class AlgoliaIndexBuilder {
     public static Index build() {
         Client client = new Client(APPLICATION_ID, API_KEY);
         Index index = client.initIndex(INDEX_NAME);
-
-        /*try { // not working
-            JSONObject settings = new JSONObject().put("hitsPerPage", SETTINGS_HITS_PER_PAGE);
-            index.setSettingsAsync(settings, null);
-        } catch (JSONException e) {
-            Log.e(AlgoliaSearchController.class.getSimpleName(), "Can't create json settings object", e);
-        }*/
-
-        // TODO activate the cache when working well
-        //index.enableSearchCache(SETTINGS_CACHE_DURATION, SETTINGS_CACHE_MAX_REQUEST);
+        index.enableSearchCache(SETTINGS_CACHE_DURATION, SETTINGS_CACHE_MAX_REQUEST);
         return index;
     }
 

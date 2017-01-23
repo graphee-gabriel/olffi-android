@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.BaseAdapter;
 
 import com.olffi.app.olffi.json.SearchResult;
-import com.olffi.app.olffi.search.AlgoliaIndexBuilder;
+import com.olffi.app.olffi.search.AlgoliaIndex;
 import com.olffi.app.olffi.search.AlgoliaSearchController;
 import com.olffi.app.olffi.search.adapter.SearchResultAdapter;
 
@@ -21,7 +21,7 @@ public class AlgoliaSearchActivity extends SearchBaseActivity implements Algolia
 
     @Override
     public void onPreBuildAdapter() {
-        algoliaSearchController = new AlgoliaSearchController(AlgoliaIndexBuilder.build());
+        algoliaSearchController = new AlgoliaSearchController(AlgoliaIndex.getInstance());
         algoliaSearchController.setListener(this);
     }
 
