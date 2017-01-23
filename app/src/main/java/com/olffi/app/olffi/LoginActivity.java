@@ -100,6 +100,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 signUpConfirmView.setVisibility(View.VISIBLE);
             if (signUpNameView != null)
                 signUpNameView.setVisibility(View.VISIBLE);
+            if (emailSignInButton != null)
+                emailSignInButton.setText(getString(R.string.button_sign_up));
         }
 
         mViewPassword.setOnEditorActionListener((textView, id, keyEvent) -> {

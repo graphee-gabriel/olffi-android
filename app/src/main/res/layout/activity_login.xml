@@ -87,7 +87,7 @@
                     style="@style/EdiTextLogin"
                     android:hint="@string/prompt_password"
                     android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeActionLabel="@string/button_log_in"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1" />
@@ -105,7 +105,7 @@
                     style="@style/EdiTextLogin"
                     android:hint="@string/prompt_password_confirm"
                     android:imeActionId="@+id/sign_up"
-                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeActionLabel="@string/button_log_in"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1" />
@@ -117,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_half"
-                android:text="@string/action_sign_in"
+                android:text="@string/button_log_in"
                 android:textStyle="bold" />
 
         </LinearLayout>
