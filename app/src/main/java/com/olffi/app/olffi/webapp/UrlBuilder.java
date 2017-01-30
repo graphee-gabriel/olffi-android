@@ -15,7 +15,7 @@ public class UrlBuilder {
     }
 
     public static String getUrlFromRelativeUrl(UserPreferences pref, String relativeUrl) {
-        return appendCredentialsToUrl(pref, "http://www.olffi.com"+relativeUrl+"?");
+        return appendCredentialsToUrl(pref, "http://www.olffi.com"+relativeUrl+"?") + "&app=android";
     }
 
     public static String appendCredentialsToUrl(UserPreferences pref, String url) {
