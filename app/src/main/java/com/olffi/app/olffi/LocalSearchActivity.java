@@ -74,12 +74,17 @@ public abstract class LocalSearchActivity<T> extends SearchBaseActivity {
     public void filter(String query) {
         getDataFiltered().clear();
         if (getData() != null) {
-            boolean isQueryEmpty = TextUtils.isEmpty(query);
+            String[] queries = TextUtils.isEmpty(query) ? null : query.toLowerCase().trim().split("\\s+");
             for (T object : getData()) {
                 String name = getStringToSearch(object);
-                if (isQueryEmpty || name != null && name.toLowerCase().contains(query)) {
+                boolean shouldAddObject = true;
+                if (queries != null && name != null)
+                    for (String q : queries)
+                        if (!name.toLowerCase().contains(q))
+                            shouldAddObject = false;
+
+                if (shouldAddObject)
                     getDataFiltered().add(object);
-                }
             }
         }
     }
