@@ -4,8 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/linkedin-sdk/linkedin-sdk.iml" filepath="$PROJECT_DIR$/linkedin-sdk/linkedin-sdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/o.iml" filepath="$PROJECT_DIR$/o.iml" />
       <module fileurl="file://$PROJECT_DIR$/olffi.iml" filepath="$PROJECT_DIR$/olffi.iml" />
-      <module fileurl="file://$PROJECT_DIR$/olffi-android.iml" filepath="$PROJECT_DIR$/olffi-android.iml" />
     </modules>
   </component>
 </project>

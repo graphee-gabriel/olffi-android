@@ -21,6 +21,8 @@ import java.io.IOException;
 
 public class AlgoliaSearchController {
 
+    private final static String TAG = AlgoliaSearchController.class.getSimpleName();
+
     private String query;
     private Index index;
     private SearchResultListener listener;
@@ -44,6 +46,7 @@ public class AlgoliaSearchController {
 
     public void searchAsync(String query) {
         this.query = query;
+        Log.d(TAG, "searchAsync: "+query);
         index.searchAsync(
                 new Query(query)
                         .setHitsPerPage(AlgoliaIndexBuilder.SETTINGS_HITS_PER_PAGE),

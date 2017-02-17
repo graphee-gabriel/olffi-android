@@ -1,5 +1,6 @@
 package com.olffi.app.olffi;
 
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.BaseAdapter;
@@ -18,6 +19,8 @@ public class AlgoliaSearchActivity extends SearchBaseActivity implements Algolia
     private SearchResultAdapter searchResultAdapter;
     private AlgoliaSearchController algoliaSearchController;
     private SearchResult data;
+    private Handler handler;
+    private Runnable runnable;
 
     @Override
     public void onPreBuildAdapter() {
@@ -61,6 +64,7 @@ public class AlgoliaSearchActivity extends SearchBaseActivity implements Algolia
         setAdapterData(null);
         hideLoading();
         setEmptyText(getSearchHint());
+        clearHandler();
     }
 
     @Override
@@ -68,7 +72,10 @@ public class AlgoliaSearchActivity extends SearchBaseActivity implements Algolia
         setEmptyText(getString(R.string.list_empty_searching_for, query));
         setAdapterData(null);
         showLoading();
-        algoliaSearchController.searchAsync(query);
+
+        clearHandler();
+        runnable = () -> algoliaSearchController.searchAsync(query);
+        handler.postDelayed(runnable, 300);
     }
 
     @Override
@@ -95,5 +102,13 @@ public class AlgoliaSearchActivity extends SearchBaseActivity implements Algolia
             );
             searchResultAdapter.notifyDataSetChanged();
         }
+    }
+
+    private void clearHandler() {
+        if (handler == null)
+            handler = new Handler();
+        if (runnable != null)
+            handler.removeCallbacks(runnable);
+        runnable = null;
     }
 }
